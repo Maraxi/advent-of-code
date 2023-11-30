@@ -2,7 +2,4 @@
 
 day=$(date +'%-d')
 mkdir -p "$day"
-curl 'https://adventofcode.com/2022/day/1/input' \
-  -H "cookie: session=$(cat cookie)" \
-  --compressed \
-  -o "${day}/input.txt"
+cp template/* "$day"
