@@ -1,11 +1,6 @@
 from helpers import *
 import re
 
-config = [
-    2,
-    2,
-]
-
 
 letters = "abcdefghijklmnopqrstuvwxyz"
 
@@ -51,8 +46,11 @@ def solution2():
 
 
 if __name__ == "__main__":
-    data = load("input.txt") if config[0] else load("sample.txt")
-    if config[1] == 1:
-        solution1()
-    else:
-        solution2()
+    # config[0] is 1 for sample file; 2 for input file
+    # config[1] is 1 for task 1; 2 for task 2
+    config = [
+        2,
+        2,
+    ]
+    data = load(config)
+    solution1() if config[1] == 1 else solution2()

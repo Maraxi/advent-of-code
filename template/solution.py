@@ -1,11 +1,5 @@
 from helpers import *
 
-config = [
-    False,
-    #True,
-    1
-]
-
 
 def solution1():
     pass
@@ -16,8 +10,11 @@ def solution2():
 
 
 if __name__ == "__main__":
-    data = load("input.txt") if config[0] else load("sample.txt")
-    if config[1] == 1:
-        solution1()
-    else:
-        solution2()
+    # config[0] is 1 for sample file; 2 for input file
+    # config[1] is 1 for task 1; 2 for task 2
+    config = [
+        1,
+        1,
+    ]
+    data = load(config)
+    solution1() if config[1] == 1 else solution2()
