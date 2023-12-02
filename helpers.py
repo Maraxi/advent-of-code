@@ -11,8 +11,12 @@ def _load(file: str):
 
 
 def load(config):
-    if config[0] == 2:
-        return _load("input.txt")
-    if config[1] == 2 and Path("sample2.txt").exists():
-        return _load("sample2.txt")
-    return _load("sample1.txt")
+    match config:
+        case 1:
+            return _load("sample1.txt")
+        case 2:
+            return _load("input.txt")
+        case 3:
+            return _load("sample2.txt")
+        case 4:
+            return _load("input.txt")

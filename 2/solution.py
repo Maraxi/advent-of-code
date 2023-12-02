@@ -53,11 +53,6 @@ def solution2():
 
 
 if __name__ == "__main__":
-    # config[0] is 1 for sample file; 2 for input file
-    # config[1] is 1 for task 1; 2 for task 2
-    config = [
-        2,
-        2,
-    ]
+    config = 4
     data = load(config)
-    solution1() if config[1] == 1 else solution2()
+    solution1() if config < 3 else solution2()
