@@ -1,5 +1,6 @@
 from helpers import *
 import pyperclip
+import re
 
 
 def solution1():
