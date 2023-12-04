@@ -4,11 +4,13 @@ import re
 
 
 def solution1():
-    pass
+    total = 0
+    return total
 
 
 def solution2():
-    pass
+    total = 0
+    return total
 
 
 if __name__ == "__main__":
