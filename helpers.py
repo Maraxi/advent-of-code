@@ -17,6 +17,9 @@ def load(config):
         case 2:
             return _load("input.txt")
         case 3:
-            return _load("sample2.txt")
+            data = _load("sample2.txt")
+            if data[0]:
+                return data
+            return _load("sample1.txt")
         case 4:
             return _load("input.txt")
