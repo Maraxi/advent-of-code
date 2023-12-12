@@ -90,7 +90,7 @@ def solution2():
 
 
 if __name__ == "__main__":
-    config = 3
+    config = 4
     data = load(config)
     result = solution1() if config < 3 else solution2()
     print(result)
