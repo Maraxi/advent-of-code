@@ -23,3 +23,9 @@ def load(config):
             return _load("sample1.txt")
         case 4:
             return _load("input.txt")
+
+
+def transpose(lines):
+    if isinstance(lines[0], str):
+        return ["".join(line) for line in zip(*lines)]
+    return list(zip(*lines))
