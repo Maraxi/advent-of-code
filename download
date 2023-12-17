@@ -6,3 +6,4 @@ curl "https://adventofcode.com/2023/day/${day}/input" \
   -H "cookie: session=$(cat cookie)" \
   --compressed \
   -o "${day}/input.txt"
+cat "${day}/input.txt"

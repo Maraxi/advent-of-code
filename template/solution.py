@@ -1,6 +1,10 @@
 from helpers import *
 import pyperclip
 import re
+from collections import defaultdict, Counter, deque
+from heapq import heappush, heappop
+from functools import reduce
+from datetime import datetime
 
 
 def solution1():
@@ -15,7 +19,8 @@ def solution2():
 
 if __name__ == "__main__":
     config = 1
+    start = datetime.now()
     data = load(config)
     result = solution1() if config < 3 else solution2()
-    print(result)
+    print(result, datetime.now() - start)
     pyperclip.copy(result)
