@@ -45,6 +45,9 @@ class Grid:
         self.h = len(block)
         self.w = len(block[0])
 
+    def __setitem__(self, key, val):
+        self.matrix[key[1]][key[0]] = val
+
     def __getitem__(self, key):
         return self.matrix[key[1]][key[0]]
 
