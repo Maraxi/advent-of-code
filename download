@@ -3,6 +3,7 @@
 day=$(date +'%-d')
 mkdir -p "$day"
 curl "https://adventofcode.com/2023/day/${day}/input" \
+  --noproxy '*' \
   -H "cookie: session=$(cat cookie)" \
   --compressed \
   -o "${day}/input.txt"
