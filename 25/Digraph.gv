@@ -607,6 +607,7 @@ digraph {
 	rmt -> gcr
 	rmt -> rjn
 	rmt -> xdc
+	rmt -> nqh
 	rmt -> tbl
 	mqf -> jhj
 	mqf -> spq
@@ -2218,6 +2219,7 @@ digraph {
 	glr -> dzm
 	ltn -> bfq
 	ltn -> dxc
+	ltn -> trh
 	ltn -> rgj
 	xbk -> dzc
 	xbk -> jxg
@@ -3029,6 +3031,7 @@ digraph {
 	kzr -> qvp
 	kzr -> xzx
 	psj -> bjj
+	psj -> fdb
 	psj -> jcz
 	ntk -> brc
 	jbm -> xhf
