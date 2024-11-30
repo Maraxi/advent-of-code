@@ -1,5 +1,0 @@
-#!/bin/bash
-
-day=$(date +'%-d')
-mkdir -p "$day"
-cp template/* "$day"

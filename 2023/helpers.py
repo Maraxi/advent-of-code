@@ -1,4 +1,6 @@
 from enum import Enum
+import sys
+import os
 
 
 def _load(file: str):
@@ -11,18 +13,18 @@ def _load(file: str):
 
 
 def load(config):
+    day = sys.argv[0].removesuffix(".py")
     match config:
         case 1:
-            return _load("sample1.txt")
+            return _load(f"{day}.sample")
         case 2:
-            return _load("input.txt")
+            return _load(f"{day}.input")
         case 3:
-            data = _load("sample2.txt")
-            if data[0]:
-                return data
-            return _load("sample1.txt")
+            if os.path.isfile(f"{day}.sample2"):
+                return _load(f"{day}.sample2")
+            return _load(f"{day}.sample")
         case 4:
-            return _load("input.txt")
+            return _load(f"{day}.input")
 
 
 def transpose(lines):
