@@ -1,10 +1,26 @@
 #!/bin/bash
 
-day=$(date +'%-d')
-mkdir -p "$day"
-curl "https://adventofcode.com/2023/day/${day}/input" \
-  --noproxy '*' \
-  -H "cookie: session=$(cat cookie)" \
+folder=$(git rev-parse --show-toplevel)
+cookie="${folder}/cookie"
+
+[[ -f $cookie ]] || { echo "cookie missing" ; exit 1 ; }
+
+day=${1:-$(date +'%-d')}
+padded_day=$(echo $day | sed -e 's/^.$/0&/')
+year=${2:-$(date +'%Y')}
+
+file="${folder}/${year}/${padded_day}.input"
+
+mkdir -p "$folder/$year"
+
+pgrep openconnect > /dev/null || export no_proxy='*'
+
+
+curl "https://adventofcode.com/${year}/day/${day}/input" \
   --compressed \
-  -o "${day}/input.txt"
-cat "${day}/input.txt"
+  -H "cookie: session=$(cat $cookie)" \
+  -A "https://github.com/Maraxi/advent-of-code/blob/main/download" \
+  -o "$file"
+
+head "$file"
+wc -l "$file"
