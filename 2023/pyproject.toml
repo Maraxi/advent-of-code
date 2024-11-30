@@ -1,0 +1,12 @@
+[project]
+name = "2023"
+version = "0.1.0"
+description = "Solutions for Advent of Code"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "graphviz>=0.20.1",
+    "numpy>=1.26.2",
+    "pyperclip>=1.8.2",
+    "sympy>=1.12",
+]
