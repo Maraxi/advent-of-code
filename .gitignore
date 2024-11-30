@@ -1,5 +1,7 @@
 .idea/
 __pycache__/
-cookie
-input.txt
 venv/
+.venv/
+
+cookie
+*.input
