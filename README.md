@@ -15,3 +15,7 @@ The result is provided in the variable `data`
    * config == 3: run `solution2` on `sample2.txt` if it is not empty
      or `sample1.txt` instead
    * config == 4: run `solution2` on `input.txt`
+
+# 2024
+See <https://adventofcode.com/2024>.
+
