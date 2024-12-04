@@ -1,11 +1,11 @@
+from helpers import load, wrap
 import re
-import sys
 
 
 def matches(s: str):
     reg = re.compile(r"(do(?:n't)?\(\))|mul\((\d{1,3}),(\d{1,3})\)")
     matches = reg.findall(s)
-    print(matches)
+    # print(matches)
     return matches
 
 
@@ -16,7 +16,7 @@ def multiply(lis: list[tuple]):
         if s != "":
             continue
         sum += int(a) * int(b)
-    print(sum)
+    return sum
 
 
 def multiply2(lis: list[tuple]):
@@ -34,17 +34,15 @@ def multiply2(lis: list[tuple]):
         else:
             if active:
                 sum += int(a) * int(b)
-    print(sum)
+    return sum
 
 
+@wrap
 def main():
-    file_name = sys.argv[1]
-    with open(file_name) as file:
-        content = file.read()
-    # print(content)
+    content = "".join(load())
     results = matches(content)
-    multiply(results)
-    multiply2(results)
+    yield multiply(results)
+    yield multiply2(results)
 
 
 if __name__ == "__main__":

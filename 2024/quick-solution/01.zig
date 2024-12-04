@@ -15,7 +15,7 @@ fn get_args(allocator: std.mem.Allocator) conf {
     if (std.mem.eql(u8, args.next() orelse "", "1")) {
         config.func = 1;
     }
-    config.input = args.next() orelse "01.input";
+    config.input = args.next() orelse "../01.input";
 
     return config;
 }

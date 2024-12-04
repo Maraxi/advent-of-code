@@ -1,10 +1,5 @@
-# import pyperclip
+from helpers import load, wrap
 import re
-import math
-from collections import defaultdict, Counter, deque
-from heapq import heappush, heappop
-from functools import reduce
-from datetime import datetime
 
 
 def solution1():
@@ -72,13 +67,12 @@ def solution2():
     return total
 
 
-if __name__ == "__main__":
-    start = datetime.now()
-    with open("04.input") as file:
-        content = file.read().strip()
-        lines = list(content.split("\n"))
+@wrap
+def main():
+    yield solution1()
+    yield solution2()
 
-    result = solution1()
-    print(result, datetime.now() - start)
-    result = solution2()
-    print(result, datetime.now() - start)
+
+if __name__ == "__main__":
+    lines = load()
+    main()
