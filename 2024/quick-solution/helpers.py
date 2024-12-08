@@ -114,6 +114,18 @@ class Point(tuple):
     def __hash__(self):
         return hash((self[0], self[1]))
 
+    def __add__(self, other):
+        return Point((self[0] + other[0], self[1] + other[1]))
+
+    def __sub__(self, other):
+        return Point((self[0] - other[0], self[1] - other[1]))
+
+    def __neg__(self):
+        return Point((-self.x, -self.y))
+
+    def within(self, width, height):
+        return 0 <= self[0] < width and 0 <= self[1] < height
+
 
 class Direction(Enum):
     right = (1, 0)
@@ -153,8 +165,7 @@ class Direction(Enum):
 
 class Grid:
     def __init__(self, block, to_int=False):
-        self.matrix = [[(int(e) if to_int else e)
-                        for e in row] for row in block]
+        self.matrix = [[(int(e) if to_int else e) for e in row] for row in block]
         self.h = len(block)
         self.w = len(block[0])
 
