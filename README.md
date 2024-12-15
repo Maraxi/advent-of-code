@@ -16,6 +16,6 @@ The result is provided in the variable `data`
      or `sample1.txt` instead
    * config == 4: run `solution2` on `input.txt`
 
-# 2024
+# Solutions for Advent of Code 2024
 See <https://adventofcode.com/2024>.
 
