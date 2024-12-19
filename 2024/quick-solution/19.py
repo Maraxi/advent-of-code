@@ -1,42 +1,53 @@
-from helpers import load, wrap, Direction, Point, Grid
-import re
-import math
-from collections import defaultdict, Counter, deque
-from heapq import heappush, heappop
+from helpers import load, wrap
 
 
-def solution1():
-    total = 0
+class Trie:
+    def __init__(self):
+        self.val = 0
+        self.children = {}
+
+    def add(self, word):
+        if word == "":
+            self.val += 1
+        else:
+            if word[0] not in self.children:
+                self.children[word[0]] = Trie()
+            self.children[word[0]].add(word[1:])
+
+    def __getitem__(self, letter=None):
+        if letter is None:
+            return self.val
+        if letter not in self.children:
+            return None
+        return self.children[letter]
+
+
+def solution():
+    trie = Trie()
+    for word in available:
+        trie.add(word)
+
+    res1, res2 = 0, 0
     for target in targets:
-        Q = [target]
-        while Q:
-            current = Q.pop()
-            if current == "":
-                total += 1
-                break
-            for avai in available:
-                if len(current) >= len(avai) and current[: len(avai)] == avai:
-                    Q.append(current[len(avai):])
+        tries = [[1, trie]]
 
-    return total
+        for letter in target:
+            new_tries = []
+            total = 0
+            for val, t in tries:
+                tnew = t[letter]
+                if tnew is not None:
+                    new_tries.append((val, tnew))
+                    total += val * tnew.val
+            if total > 0:
+                new_tries.append((total, trie))
+            tries = new_tries
+        else:
+            if total > 0:
+                res1 += 1
+                res2 += tries[-1][0]
 
-
-def solution2():
-    total = 0
-    for target in targets:
-        possible = [0 for _ in range(len(target) + 1)]
-        possible[0] = 1
-
-        for j in range(1, len(target) + 1):
-            for avai in available:
-                la = len(avai)
-                if la > j:
-                    continue
-                if target[j - la: j] == avai:
-                    possible[j] += possible[j - la]
-        total += possible[-1]
-
-    return total
+    return res1, res2
 
 
 @wrap
@@ -45,8 +56,9 @@ def main():
     available, targets = load()
     available = available.split(", ")
 
-    yield solution1()
-    yield solution2()
+    res1, res2 = solution()
+    yield res1
+    yield res2
 
 
 if __name__ == "__main__":
