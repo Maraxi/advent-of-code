@@ -1,98 +1,71 @@
-from helpers import load, wrap, Direction, Point, Grid, l1
-import re
-import math
-from collections import defaultdict, Counter, deque
-from heapq import heappush, heappop
+from helpers import load, wrap, Direction, Grid, l1
 
 
-def explore(grid, start, end):
-    seen = {}
-    Q = [(0, start)]
-    while Q:
-        val, pos = Q.pop(0)
-        if pos in seen:
-            continue
-        seen[pos] = val
+def find_path(grid, start, end):
+    path = [start]
+    prev = start
 
-        if pos == end:
+    for dir in Direction:
+        current = dir[prev]
+        if grid[current] == ".":
+            path.append(current)
             break
 
+    while current != end:
         for dir in Direction:
-            step = dir[pos]
-            if grid[step] in "S.E":
-                Q.append((val + 1, step))
-    return seen
+            step = dir[current]
+            if grid[step] != "#" and step != prev:
+                path.append(step)
+                prev, current = current, step
+                break
+    return path
 
 
-def solution1(grid):
-    start = grid.find_all("S")[0]
-    end = grid.find_all("E")[0]
+def solution(path):
+    small_cheats = 0
+    cheats = 0
+    for i, pos in enumerate(path):
+        j = i + TIME_SAVE + 2
+        while j < len(path):
+            other_pos = path[j]
+            dist = l1(pos, other_pos)
 
-    forward = explore(grid, start, end)
-    backward = explore(grid, end, start)
+            buffer = j - (i + dist + TIME_SAVE)
+            if buffer < 0:
+                j -= buffer // 2
+                continue
 
-    base_line = forward[end]
-    cheats = defaultdict(int)
+            if dist > LARGE_SKIP:
+                j += dist - LARGE_SKIP
+                continue
 
-    for pos in forward:
-        for dir in Direction:
-            step = dir[pos]
-            next_step = dir[step]
-            if grid[step] == "#" and next_step in backward:
-                length = forward[pos] + 2 + backward[next_step]
-                if length + time_save <= base_line:
-                    cheats[base_line - length] += 1
+            if dist == 2:
+                small_cheats += 1
+                lower_check = 4
+            else:
+                lower_check = dist - 2
+            upper_check = LARGE_SKIP + 1 - dist
+            remaining = len(path) - j
 
-    total = 0
-    for key, val in cheats.items():
-        total += val
-
-    return total
-
-
-def solution2(grid, skip):
-    start = grid.find_all("S")[0]
-    end = grid.find_all("E")[0]
-
-    forward = explore(grid, start, end)
-    backward = explore(grid, end, start)
-
-    base_line = forward[end]
-    cheats = defaultdict(int)
-
-    forward = {
-        k: v for k, v in forward.items() if base_line - v - l1(k, end) >= time_save
-    }
-    backward = {
-        k: v for k, v in backward.items() if base_line - v - l1(k, start) >= time_save
-    }
-
-    l = len(forward)
-    for i, pos in enumerate(forward):
-        if i % 1000 == 0:
-            print(i, "/", l)
-        for oth in backward:
-            if l1(pos, oth) <= skip:
-                length = forward[pos] + l1(pos, oth) + backward[oth]
-                if length + time_save <= base_line:
-                    cheats[base_line - length] += 1
-
-    total = 0
-    for key, val in cheats.items():
-        total += val
-
-    return total
+            till_next_check = max(1, min(lower_check, upper_check, remaining))
+            cheats += till_next_check
+            j += till_next_check
+    return small_cheats, cheats
 
 
 @wrap
 def main():
-    grid = Grid(lines)
-    yield solution1(grid)
-    yield solution2(grid, skip)
+    grid = Grid(load())
+    start = grid.find_all("S")[0]
+    end = grid.find_all("E")[0]
+    path = find_path(grid, start, end)
+
+    res1, res2 = solution(path)
+    yield res1
+    yield res2
 
 
 if __name__ == "__main__":
-    lines = load()
-    time_save = 100
-    skip = 20
+    TIME_SAVE = 100
+    LARGE_SKIP = 20
     main()
