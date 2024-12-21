@@ -101,6 +101,12 @@ def is_inside_polygon(corners, point):
 class Point(tuple):
     """pairs of (col, row)"""
 
+    def __new__(cls, arg1, arg2=None):
+        if arg2 is None:
+            return super().__new__(cls, arg1)
+        else:
+            return super().__new__(cls, (arg1, arg2))
+
     def __eq__(self, o):
         return o[0] == self[0] and o[1] == self[1]
 
@@ -186,10 +192,16 @@ class Grid:
     def bound(self):  # position with maximal coords
         return self.w - 1, self.h - 1
 
+    def find(self, char):
+        for row, line in enumerate(self.matrix):
+            for col, entry in enumerate(line):
+                if entry == char:
+                    return Point((col, row))
+
     def find_all(self, char):
         return [
-            Point((x, y))
-            for y, line in enumerate(self.matrix)
-            for x, entry in enumerate(line)
+            Point((col, row))
+            for row, line in enumerate(self.matrix)
+            for col, entry in enumerate(line)
             if entry == char
         ]
